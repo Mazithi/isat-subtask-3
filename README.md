@@ -29,3 +29,35 @@ int main() {
     return 0;
 }
 
+ What Is This Code Meant For?
+This program is designed to help a fictional business called Magwima Magic manage customer orders. It stores and displays:
+• 	The Order ID
+• 	The Customer’s name
+• 	The Number of Magwimas ordered
+• 	The Total amount paid
+
+ 
+These lines tell the computer:
+• 	“I want to use input/output tools” like  to print things.
+• 	“I want to use text (string) data” for customer names.
+
+
+ We have 3 orders, so our arrays will hold 3 items.
+This makes it easy to change the size later if needed.
+use parallel arrays to store different parts of each order:
+• 	 holds the order numbers.
+• 	 holds the names.
+• 	 holds how many Magwimas were ordered.
+• 	 holds the total cost.
+Each array uses the same index to match the data:
+• 	Index  = Lerato’s order
+• 	Index  = Nomvula’s order
+• 	Index  = Sipho’s order
+
+This loop repeats the same block of code three times (because SIZE is 3). Each time, it uses a different index  to access the next order.
+ What the loop does:
+• 	First time (): shows Lerato’s order
+• 	Second time (): shows Nomvula’s order
+• 	Third time (): shows Sipho’s order
+Without a loop, you would  have to write the same  code three times manually. That is slow and hard to update.
+With a loop, you write a code once, and it repeats automatically.
