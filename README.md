@@ -1,63 +1,132 @@
 # isat-subtask-3
-//Mhloli Mazithi
-//0408080954089
 #include <iostream>
 #include <string>
 using namespace std;
 
-// we only have 3 orders for now
-const int SIZE = 3;
+const int MAX_ORDERS = 50;
 
-// Arrays to store order information
-int orderIDs[SIZE] = {102, 103, 104};
-string customerNames[SIZE] = {"Lerato", "Nomvula", "Sipho"};
-int numMagwimas[SIZE] = {6, 5, 4};
-float totalAmounts[SIZE] = {30.00, 10.00, 22.00};
+// Parallel arrays
+int orderIDs[MAX_ORDERS];
+string customerNames[MAX_ORDERS];
+string orderDetails[MAX_ORDERS];
+double totalCosts[MAX_ORDERS];
+int orderCount = 0;
 
-int main() {
-    cout << "Magwima Magic Orders:\n\n";
-
-    // Loop through each order and display the details
-    for (int i = 0; i < SIZE; i++) {
-        cout << "Order ID: " << orderIDs[i] << endl;
-        cout << "Customer Name: " << customerNames[i] << endl;
-        cout << "Magwimas Ordered: " << numMagwimas[i] << endl;
-        cout << "Total Amount: R" << totalAmounts[i] << endl;
-        cout << "-----------------------------\n";
+// Function to find order index by ID
+int findOrderIndex(int id) {
+    for (int i = 0; i < orderCount; i++) {
+        if (orderIDs[i] == id) {
+            return i;
+        }
     }
+    return -1;
+}
+
+// Add a new order
+void addOrder() {
+    if (orderCount >= MAX_ORDERS) {
+        cout << "Cannot add more orders. Limit reached.\n";
+        return;
+    }
+
+    int id;
+    cout << "Enter Order ID: ";
+    cin >> id;
+
+    if (findOrderIndex(id) != -1) {
+        cout << "Error: Order ID already exists.\n";
+        return;
+    }
+
+    cin.ignore(); // Clear buffer
+    cout << "Enter Customer Name: ";
+    getline(cin, customerNames[orderCount]);
+
+    cout << "Enter Order Details: ";
+    getline(cin, orderDetails[orderCount]);
+
+    cout << "Enter Total Cost (e.g., 35.00): R";
+    cin >> totalCosts[orderCount];
+
+    orderIDs[orderCount] = id;
+    orderCount++;
+
+    cout << "Order added successfully!\n";
+}
+
+// Display all orders
+void displayOrders() {
+    if (orderCount == 0) {
+        cout << "No orders to display.\n";
+        return;
+    }
+
+    double totalRevenue = 0;
+    cout << "\n--- All Orders ---\n";
+    for (int i = 0; i < orderCount; i++) {
+        cout << "Customer Name: " << customerNames[i] << endl;
+        cout << "Order ID: " << orderIDs[i] << endl;
+        cout << "Order Details: " << orderDetails[i] << endl;
+        cout << "Total Cost: R" << totalCosts[i] << "\n\n";
+        totalRevenue += totalCosts[i];
+    }
+    cout << "Total Revenue: R" << totalRevenue << "\n";
+}
+
+// Find order by ID
+void findOrder() {
+    int id;
+    cout << "Enter Order ID to search: ";
+    cin >> id;
+
+    int index = findOrderIndex(id);
+    if (index == -1) {
+        cout << "Error: Order ID not found.\n";
+    } else {
+        cout << "Customer Name: " << customerNames[index] << endl;
+        cout << "Order ID: " << orderIDs[index] << endl;
+        cout << "Order Details: " << orderDetails[index] << endl;
+        cout << "Total Cost: R" << totalCosts[index] << endl;
+    }
+}
+
+// Main menu
+int main() {
+    int choice;
+    do {
+        cout << "\n--- Magwinya Magic Order System ---\n";
+        cout << "1. Add New Order\n";
+        cout << "2. Display All Orders\n";
+        cout << "3. Find Order by ID\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addOrder();
+                break;
+            case 2:
+                displayOrders();
+                break;
+            case 3:
+                findOrder();
+                break;
+            case 4: {
+                cout << "Goodbye! Summing up total revenue...\n";
+                double total = 0;
+                for (int i = 0; i < orderCount; i++) {
+                    total += totalCosts[i];
+                }
+                cout << "Total Revenue: R" << total << "\n";
+                break;
+            }
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 4);
 
     return 0;
 }
 
- What Is This Code Meant For?
-This program is designed to help a fictional business called Magwima Magic manage customer orders. It stores and displays:
-• 	The Order ID
-• 	The Customer’s name
-• 	The Number of Magwimas ordered
-• 	The Total amount paid
-
  
-These lines tell the computer:
-• 	“I want to use input/output tools” like  to print things.
-• 	“I want to use text (string) data” for customer names.
-
-
- We have 3 orders, so our arrays will hold 3 items.
-This makes it easy to change the size later if needed.
-use parallel arrays to store different parts of each order:
-• 	 holds the order numbers.
-• 	 holds the names.
-• 	 holds how many Magwimas were ordered.
-• 	 holds the total cost.
-Each array uses the same index to match the data:
-• 	Index  = Lerato’s order
-• 	Index  = Nomvula’s order
-• 	Index  = Sipho’s order
-
-This loop repeats the same block of code three times (because SIZE is 3). Each time, it uses a different index  to access the next order.
- What the loop does:
-• 	First time (): shows Lerato’s order
-• 	Second time (): shows Nomvula’s order
-• 	Third time (): shows Sipho’s order
-Without a loop, you would  have to write the same  code three times manually. That is slow and hard to update.
-With a loop, you write a code once, and it repeats automatically.
